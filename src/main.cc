@@ -64,18 +64,6 @@ int main(void) {
     cout << "Only just started!" << endl;
 
 
-    // ifstream input( "train-images.idx3-ubyte" );
-
-    // std::ifstream file("train-images.idx3-ubyte", ios::binary);
-    // if (file.is_open()) {
-    //     std::string line;
-    //     while (std::getline(file, line)) {
-    //         // using printf() in all tests for consistency
-    //         printf("%s", line.c_str());
-    //     }
-    //     file.close();
-    // }
-
     read_mnist();
 
 
