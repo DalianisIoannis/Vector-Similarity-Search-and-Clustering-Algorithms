@@ -9,9 +9,11 @@ int main(void) {
 
     cout << "Only just started!" << endl;
 
-    imageInput *s = new imageInput("train-images.idx3-ubyte");
+    dataInput *s = new dataInput("train-images.idx3-ubyte");
 
     s->readMnist();
+
+    // s->tryVector();
 
     delete s;
 

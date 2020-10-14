@@ -1,12 +1,6 @@
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <errno.h>
-
 #include "../headers/input.h"
 
-// int reverseInt (int i) 
-// {
+// int reverseInt (int i) {
 //     unsigned char c1, c2, c3, c4;
 
 //     c1 = i & 255;
@@ -17,17 +11,17 @@
 //     return ((int)c1 << 24) + ((int)c2 << 16) + ((int)c3 << 8) + c4;
 // }
 
-imageInput::imageInput(string iFile):inputFile(iFile)
+dataInput::dataInput(string iFile):inputFile(iFile)
 {
-    cout<<"I've just created imageInput with file " << this->inputFile <<endl;
+    cout<<"I've just created dataInput with file " << this->inputFile <<endl;
 }
 
-imageInput::~imageInput()
+dataInput::~dataInput()
 {
-    cout <<"I'm destroying imageInput"<<endl;
+    cout <<"I'm destroying dataInput"<<endl;
 }
 
-void imageInput::readMnist()
+void dataInput::readMnist()
 {
 
     ifstream file (this->inputFile, ios::binary);
@@ -67,18 +61,29 @@ void imageInput::readMnist()
         this->cols = __builtin_bswap32(this->cols);
         cout << this->cols << endl;
 
+        this->imVector.resize(this->number_of_images);
 
         for(int i=0; i<this->number_of_images; i++) {
+
+            // vector<int> v1;
+            
             for(int j=0; j<this->rows; j++) {
                 for(int k=0; k<this->cols; k++) {
 
                     unsigned char temp=0;
                     file.read( (char*)&temp, sizeof(temp) );
+
+                    // v1.push_back((int)temp);
+                    this->imVector[i].push_back((int)temp);
+
                     if(!file) {
                         cerr << "File IO error!\n";
                     }
                 }
             }
+
+            // this->imVector.push_back(v1);
+
         }
 
         file.close();
@@ -87,4 +92,44 @@ void imageInput::readMnist()
         cerr << "File could not be opened!\n";
     }
 
+    cout << "Size of vector is " << this->imVector.size() << endl;
+
+    for(int i=0; i<this->number_of_images; i++) {
+
+        cout << "Vector " << i << " has size " << this->imVector[i].size() << endl;
+
+    }
+
+}
+
+void dataInput::tryVector() {
+
+    int kkk = 0;
+    
+    this->imVector.resize(50);
+
+    for(int i=0; i<50; i++) {
+
+        // vector<int> v1;
+
+        for(int j=0; j<50; j++) {
+            
+
+            this->imVector[i].push_back(kkk);
+            // v1.push_back(kkk);
+            
+            kkk++;
+
+        }
+
+        // this->imVector.push_back(v1);
+
+    }
+
+    for (unsigned int i = 0; i < this->imVector.size(); i++) {
+        for (unsigned int j = 0; j < this->imVector[i].size(); j++){
+            cout << this->imVector[i][j] << " ";
+        }
+        cout << endl;
+    }
 }

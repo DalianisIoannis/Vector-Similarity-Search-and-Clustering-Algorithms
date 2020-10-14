@@ -2,18 +2,23 @@
 #include <string>
 #include <fstream>
 #include <errno.h>
+#include <vector>
 
 using namespace std;
 
-class imageInput {
+class dataInput {
     private:
         int32_t magic_number;
         int32_t number_of_images;
         int32_t rows;
         int32_t cols;
         string inputFile;
+
+        vector < vector<int> > imVector;
+
     public:
-        imageInput(string);
-        ~imageInput();
+        dataInput(string);
+        ~dataInput();
         void readMnist();
+        void tryVector();
 };
