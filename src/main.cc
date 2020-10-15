@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "../headers/input.h"
+#include "../headers/LSH.h"
 
 using namespace std;
 
@@ -11,9 +12,9 @@ int main(void) {
 
     dataInput *s = new dataInput("train-images.idx3-ubyte");
 
-    s->readMnist();
+    // s->readMnist();
 
-    // s->tryVector();
+    s->tryVector();
 
     delete s;
 

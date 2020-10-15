@@ -1,4 +1,5 @@
 #include "../headers/input.h"
+#include "../headers/LSH.h"
 
 // int reverseInt (int i) {
 //     unsigned char c1, c2, c3, c4;
@@ -126,10 +127,13 @@ void dataInput::tryVector() {
 
     }
 
-    for (unsigned int i = 0; i < this->imVector.size(); i++) {
-        for (unsigned int j = 0; j < this->imVector[i].size(); j++){
-            cout << this->imVector[i][j] << " ";
-        }
-        cout << endl;
-    }
+    // for (unsigned int i = 0; i < this->imVector.size(); i++) {
+    //     for (unsigned int j = 0; j < this->imVector[i].size(); j++){
+    //         cout << this->imVector[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    int manh = manhattanDistance( &(this->imVector)[0], &(this->imVector)[1] );
+    cout << "distance is " << manh << endl;
+
 }
