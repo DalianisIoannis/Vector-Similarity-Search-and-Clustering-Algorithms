@@ -12,9 +12,13 @@ int main(void) {
 
     dataInput *s = new dataInput("train-images.idx3-ubyte");
 
+
     // s->readMnist();
 
-    s->tryVector();
+    // s->tryVector();
+
+
+    tryHash();
 
     delete s;
 

@@ -12,7 +12,7 @@
 //     return ((int)c1 << 24) + ((int)c2 << 16) + ((int)c3 << 8) + c4;
 // }
 
-dataInput::dataInput(string iFile):inputFile(iFile)
+dataInput::dataInput(const string iFile):inputFile(iFile)
 {
     cout<<"I've just created dataInput with file " << this->inputFile <<endl;
 }
@@ -133,7 +133,9 @@ void dataInput::tryVector() {
     //     }
     //     cout << endl;
     // }
-    int manh = manhattanDistance( &(this->imVector)[0], &(this->imVector)[1] );
-    cout << "distance is " << manh << endl;
+
+
+    // int manh = manhattanDistance( &(this->imVector)[0], &(this->imVector)[1] );
+    // cout << "distance is " << manh << endl;
 
 }
