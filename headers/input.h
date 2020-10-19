@@ -17,7 +17,7 @@ class dataInput {
         vector < vector<int> > imVector;
 
     public:
-        dataInput(string);
+        dataInput(const string);
         ~dataInput();
         void readMnist();
         void tryVector();

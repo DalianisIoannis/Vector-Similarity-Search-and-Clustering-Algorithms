@@ -1,17 +1,7 @@
 #include "../headers/input.h"
+#include "../headers/LSH.h"
 
-// int reverseInt (int i) {
-//     unsigned char c1, c2, c3, c4;
-
-//     c1 = i & 255;
-//     c2 = (i >> 8) & 255;
-//     c3 = (i >> 16) & 255;
-//     c4 = (i >> 24) & 255;
-
-//     return ((int)c1 << 24) + ((int)c2 << 16) + ((int)c3 << 8) + c4;
-// }
-
-dataInput::dataInput(string iFile):inputFile(iFile)
+dataInput::dataInput(const string iFile):inputFile(iFile)
 {
     cout<<"I've just created dataInput with file " << this->inputFile <<endl;
 }
@@ -34,7 +24,6 @@ void dataInput::readMnist()
             cerr << "File IO error!\n";
         }
         this->magic_number = __builtin_bswap32(this->magic_number);
-        // magic_number= reverseInt(magic_number);
         cout << this->magic_number << endl;
 
 
@@ -126,10 +115,15 @@ void dataInput::tryVector() {
 
     }
 
-    for (unsigned int i = 0; i < this->imVector.size(); i++) {
-        for (unsigned int j = 0; j < this->imVector[i].size(); j++){
-            cout << this->imVector[i][j] << " ";
-        }
-        cout << endl;
-    }
+    // for (unsigned int i = 0; i < this->imVector.size(); i++) {
+    //     for (unsigned int j = 0; j < this->imVector[i].size(); j++){
+    //         cout << this->imVector[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+
+    // int manh = manhattanDistance( &(this->imVector)[0], &(this->imVector)[1] );
+    // cout << "distance is " << manh << endl;
+
 }
