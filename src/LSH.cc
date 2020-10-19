@@ -28,6 +28,10 @@ int concatInts(const int a, const int b) {
     string s1 = to_string(a); 
     string s2 = to_string(b);
 
+    // int c = (a << sizeof(b)) | b;
+
+    // cout << "Gave " << a << " and " << b << " and result is " << c << endl;
+    
     return stoi( s1 + s2 );
 
 }
