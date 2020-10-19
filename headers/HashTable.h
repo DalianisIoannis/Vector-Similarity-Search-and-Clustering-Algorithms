@@ -12,6 +12,7 @@ class HashBucket{
         std::list<std::vector<int>> vector_list;
     public:
         HashBucket();
+        ~HashBucket();
         void increase_Bucket_Elements();
         int get_Bucket_Elements();
         list<std::vector<int>> get_Vector_List();
@@ -26,6 +27,7 @@ class HashTable{
         HashBucketPtr HashBucketsArray ;
     public:
         HashTable(int);
+        ~HashTable();
         void increase_Table_Elements();
         int get_Table_Elements();
         HashBucketPtr get_HashBucketsArray();

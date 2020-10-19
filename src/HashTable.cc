@@ -4,6 +4,11 @@ HashBucket::HashBucket(){
     this->Bucket_Elements = 0;
     // cout << "im called" <<endl;
 }
+
+HashBucket::~HashBucket(){
+    // cout << "im called" <<endl;
+}
+
 void HashBucket::increase_Bucket_Elements(){
     this->Bucket_Elements++;
 }
@@ -28,9 +33,16 @@ HashTable::HashTable(int Buckets_Num){
     cout << "i've created a hash Table"<<endl;
 
 }
+
+HashTable::~HashTable(){
+    delete[] this->HashBucketsArray;
+    cout << "Destroyed HashTable" <<endl;
+}
+
 void HashTable::increase_Table_Elements(){
     this->Table_Elements++;
 }
+
 int HashTable::get_Table_Elements(){
     return this->Table_Elements;
 }

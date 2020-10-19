@@ -8,10 +8,10 @@ SDIR = src
 
 EXECUTABLE = run
 
-_DEPS = input.h LSH.h
+_DEPS = input.h LSH.h HashTable.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = main.o input.o LSH.o
+_OBJ = main.o input.o LSH.o HashTable.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(SDIR)/%.cc $(DEPS)
