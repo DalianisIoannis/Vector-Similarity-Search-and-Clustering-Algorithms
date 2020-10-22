@@ -31,7 +31,7 @@ int concatInts(const int a, const int b) {
     // int c = (a << sizeof(b)) | b;
 
     // cout << "Gave " << a << " and " << b << " and result is " << c << endl;
-    
+    cout << s1<<" "<<s2<<endl;
     return stoi( s1 + s2 );
 
 }
@@ -43,16 +43,14 @@ vector<int>* getVectorS(const unsigned int size, const int w) {
     for(unsigned int i=0; i<(*s).size(); i++) {
         (*s)[i] = rand() % w; // +1 ?
     }
-
     return s;
-
 }
 
-int ai(const int pi, const int si, const int w) {
+// int ai(const int pi, const int si, const int w) {
     
-    return floor( float(pi - si) / float(w) );
+//     return floor( float(pi - si) / float(w) );
 
-}
+// }
 
 int h(vector<int>* p, vector<int>* s, const int m, const int w, const int M) {
     
@@ -112,7 +110,7 @@ void tryHash() {
 
     int m = 1;
     int M = 3;
-    int k = 10;
+    int k = 9;
     int w = 52;
 
     vector<int> p(35);
@@ -123,7 +121,7 @@ void tryHash() {
         p[i] = rand() % 255 + 1;
     }
 
-    int ret = g(&p, k, w, m, M);
+    int ret = g(&p, k, w, m, M) % M;
 
     cout << "G with outside M is " << ret << endl;
 }

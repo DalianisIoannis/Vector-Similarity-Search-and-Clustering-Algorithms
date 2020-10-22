@@ -24,7 +24,8 @@ class HashTable{
     private:
         int Table_Elements;
         int Buckets_Number;
-        HashBucketPtr HashBucketsArray ;
+        HashBucketPtr HashBucketsArray;
+        std::list<std::vector<int>> List_S_Vectors;
     public:
         HashTable(int);
         ~HashTable();
@@ -35,3 +36,4 @@ class HashTable{
         int Table_Insert(int(*function)(void*),vector <int>);
 };
 int funct(void*);
+void printVector(vector<int>*);
