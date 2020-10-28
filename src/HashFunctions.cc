@@ -25,11 +25,12 @@ h_funct::h_funct(int w,int size){
 int h_funct::hashValue(vector<int>* p, const int m, const int w, const int M) {
     
     // return h()
-    int ret = 0;
+    long int ret = 0;
     int ekth = 0;
 
     for(unsigned int i=0; i< p->size(); i++) {
-        ret += int(pow(m, ekth++)) * ai( (*p)[i], (*this->VectorS)[i], w );
+        cout <<(*this->VectorS)[i]<<endl;
+        ret += abs(int(pow(m, ekth++)) * ai( (*p)[i], (*this->VectorS)[i], w ));
     }
 
     return ret % M;
@@ -56,7 +57,8 @@ int g_funct::ghashValue(vector<int>* p) {
     for(int i = 0; i < this->k; i++) {
         hashRet = concatInts( hashRet, this->VectorH[i].hashValue( p, this->m, this->w, this->M ) );
     }
-
+    cout <<hashRet<< " ";
+    hashRet = hashRet % this->M;
     cout << "hashRet is " << hashRet << endl;
     return hashRet;
 
