@@ -57,11 +57,13 @@ void dataInput::readMnist()
         this->cols = __builtin_bswap32(this->cols);
         cout << "Columns " << this->cols << endl;
 
-        this->iMageVector.resize(this->number_of_images);
+        // this->iMageVector.resize(this->number_of_images);
+        this->iMageVector.resize(100);
 
         int Id=0;
 
-        for(int i=0; i<this->number_of_images; i++) {
+        for(int i=0; i<100; i++) {
+        // for(int i=0; i<this->number_of_images; i++) {
             
             inputForm* imVec = new inputForm;
 
@@ -105,15 +107,24 @@ void dataInput::readMnist()
 void dataInput::tryVector() {
 
 
-    for (unsigned int i = 0; i < 2; i++) {
-        cout << "THIS IS IMAGE " << i << endl;
-        // for (unsigned int j = 0; j < this->iMageVector[i]->image.size(); j++){
-        for (unsigned int j = 350; j < 400; j++){
-            cout << "BIT " << j << " " << this->iMageVector[i]->image[j] << endl;
-        }
-    }
+    // for (unsigned int i = 0; i < 2; i++) {
+    //     cout << "THIS IS IMAGE " << i << endl;
+    //     // for (unsigned int j = 0; j < this->iMageVector[i]->image.size(); j++){
+    //     for (unsigned int j = 20; j < 90; j++){
+    //     // for (unsigned int j = 350; j < 400; j++){
+    //         cout << "BIT " << j << " " << this->iMageVector[i]->image[j] << endl;
+    //     }
+    // }
 
     int manh = manhattanDistance( &(this->iMageVector)[0]->image, &(this->iMageVector)[1]->image );
     cout << "distance is " << manh << endl;
 
+}
+
+inputForm* dataInput::getinputFormByNum(const int num) {
+    return this->iMageVector[num];
+}
+
+int dataInput::getiMageVectorSize() {
+    return this->iMageVector.size();
 }

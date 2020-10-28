@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -28,4 +29,6 @@ class dataInput {
         ~dataInput();
         void readMnist();
         void tryVector();
+        inputForm* getinputFormByNum(const int);
+        int getiMageVectorSize();
 };
