@@ -2,7 +2,7 @@
 
 HashBucket::HashBucket(){
     this->Bucket_Elements = 0;
-    // cout << "im called" <<endl;
+    cout << "I've created a bucket" <<endl;
 }
 
 HashBucket::~HashBucket(){
@@ -16,20 +16,21 @@ int HashBucket::get_Bucket_Elements(){
     return this->Bucket_Elements;
 }
 
-void HashBucket::Bucket_Insert(std::vector <int> PictureVector){
-    this->vector_list.push_back(PictureVector);    
+void HashBucket::Bucket_Insert(std::vector <int>* PictureVector){
+    this->vector_list.push_back(*PictureVector);    
     this->increase_Bucket_Elements();
-    cout << "I've pushed the element into the vector list" <<endl;
+    cout << "I've pushed the element into the vector list with " << this->Bucket_Elements <<" elements" <<endl;
 }
 
 list<vector<int>> HashBucket::get_Vector_List(){
     return this->vector_list;
 }
 
-HashTable::HashTable(int Buckets_Num){
-    this->Buckets_Number = Buckets_Num;
+HashTable::HashTable(int size, const int k, const int w, const int m, const int M){
+    this->Buckets_Number = M;
     this->Table_Elements = 0;
-    this->HashBucketsArray = new HashBucket[Buckets_Num];
+    this->HashBucketsArray = new HashBucket[M];
+    this->g_HashFunction = new g_funct(size,k,w,m,M);
     cout << "i've created a hash Table"<<endl;
 
 }
@@ -53,17 +54,11 @@ int HashTable::get_Buckets_Number(){
     return this->Buckets_Number;
 }
 
-int funct(void * x){
-int* y = (int*) x;
-//cout << *y<<endl;
-return 1;
-}
-
-int HashTable::Table_Insert(int(*HashFunction)(void*),std::vector <int> PictureVector){
-    int y = 3;
-    int Table_Index = (*HashFunction)(&y);
+int HashTable::Table_Insert(std::vector <int>* PictureVector){
+    int Table_Index = this->get_Hash_Function()->ghashValue(PictureVector);
     this->HashBucketsArray[Table_Index].Bucket_Insert(PictureVector);
     this->increase_Table_Elements();
+    cout <<"total "<<this->get_Table_Elements()<<" elements"<<endl;
     /*   list <vector<int>> mylist = this->HashBucketsArray[Table_Index].get_Vector_List();
     std::list<vector<int>>::iterator it;
     vector<int>::iterator ij;
@@ -72,4 +67,8 @@ int HashTable::Table_Insert(int(*HashFunction)(void*),std::vector <int> PictureV
             cout <<*ij<<endl;
     }*/
     return Table_Index;
+}
+
+g_funct* HashTable::get_Hash_Function(){
+    return this->g_HashFunction;
 }
