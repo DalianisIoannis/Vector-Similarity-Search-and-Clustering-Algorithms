@@ -8,7 +8,7 @@ using namespace std;
 
 void printVector(vector<int> *vec){
     cout << "vector:{";
-    for (int i = 0 ; i < vec->size();i++){
+    for (unsigned int i = 0 ; i < vec->size();i++){
         cout<< (*vec)[i];
     }
     cout <<"}"<<endl;

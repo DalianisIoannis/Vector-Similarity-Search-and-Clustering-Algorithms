@@ -6,6 +6,13 @@
 
 using namespace std;
 
+typedef struct inputForm{
+
+    vector<int> image;
+    int Id;
+
+} inputForm;
+
 class dataInput {
     private:
         int32_t magic_number;
@@ -14,7 +21,7 @@ class dataInput {
         int32_t cols;
         string inputFile;
 
-        vector < vector<int> > imVector;
+        vector<inputForm*> iMageVector;
 
     public:
         dataInput(const string);

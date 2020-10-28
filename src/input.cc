@@ -9,6 +9,13 @@ dataInput::dataInput(const string iFile):inputFile(iFile)
 dataInput::~dataInput()
 {
     cout <<"I'm destroying dataInput"<<endl;
+
+    for (unsigned int i = 0; i < this->iMageVector.size(); i++) {
+
+        delete this->iMageVector[i];
+
+    }
+
 }
 
 void dataInput::readMnist()
@@ -24,7 +31,7 @@ void dataInput::readMnist()
             cerr << "File IO error!\n";
         }
         this->magic_number = __builtin_bswap32(this->magic_number);
-        cout << this->magic_number << endl;
+        cout << "Magic number " << this->magic_number << endl;
 
 
         file.read( (char*)&(this->number_of_images), sizeof(this->number_of_images) );
@@ -32,7 +39,7 @@ void dataInput::readMnist()
             cerr << "File IO error!\n";
         }
         this->number_of_images = __builtin_bswap32(this->number_of_images);
-        cout << this->number_of_images << endl;
+        cout << "Images " << this->number_of_images << endl;
 
 
         file.read( (char*)&(this->rows), sizeof(this->rows) );
@@ -40,7 +47,7 @@ void dataInput::readMnist()
             cerr << "File IO error!\n";
         }
         this->rows = __builtin_bswap32(this->rows);
-        cout << this->rows << endl;
+        cout << "Rows " << this->rows << endl;
 
 
         file.read( (char*)&(this->cols), sizeof(this->cols) );
@@ -48,13 +55,17 @@ void dataInput::readMnist()
             cerr << "File IO error!\n";
         }
         this->cols = __builtin_bswap32(this->cols);
-        cout << this->cols << endl;
+        cout << "Columns " << this->cols << endl;
 
-        this->imVector.resize(this->number_of_images);
+        this->iMageVector.resize(this->number_of_images);
+
+        int Id=0;
 
         for(int i=0; i<this->number_of_images; i++) {
+            
+            inputForm* imVec = new inputForm;
 
-            // vector<int> v1;
+            imVec->Id = Id++;
             
             for(int j=0; j<this->rows; j++) {
                 for(int k=0; k<this->cols; k++) {
@@ -62,8 +73,8 @@ void dataInput::readMnist()
                     unsigned char temp=0;
                     file.read( (char*)&temp, sizeof(temp) );
 
-                    // v1.push_back((int)temp);
-                    this->imVector[i].push_back((int)temp);
+                    (imVec->image).push_back((int)temp);
+
 
                     if(!file) {
                         cerr << "File IO error!\n";
@@ -71,7 +82,7 @@ void dataInput::readMnist()
                 }
             }
 
-            // this->imVector.push_back(v1);
+            this->iMageVector[i] = imVec;
 
         }
 
@@ -81,11 +92,11 @@ void dataInput::readMnist()
         cerr << "File could not be opened!\n";
     }
 
-    cout << "Size of vector is " << this->imVector.size() << endl;
+    cout << "Vector has size " << this->iMageVector.size() << endl;
 
-    for(int i=0; i<this->number_of_images; i++) {
+    for(int i=0; i<20; i++) {
 
-        cout << "Vector " << i << " has size " << this->imVector[i].size() << endl;
+        cout << "Vector " << i << " has size " << this->iMageVector[i]->image.size() << " and ID " << this->iMageVector[i]->Id << endl;
 
     }
 
@@ -93,37 +104,16 @@ void dataInput::readMnist()
 
 void dataInput::tryVector() {
 
-    int kkk = 0;
-    
-    this->imVector.resize(50);
 
-    for(int i=0; i<50; i++) {
-
-        // vector<int> v1;
-
-        for(int j=0; j<50; j++) {
-            
-
-            this->imVector[i].push_back(kkk);
-            // v1.push_back(kkk);
-            
-            kkk++;
-
+    for (unsigned int i = 0; i < 2; i++) {
+        cout << "THIS IS IMAGE " << i << endl;
+        // for (unsigned int j = 0; j < this->iMageVector[i]->image.size(); j++){
+        for (unsigned int j = 350; j < 400; j++){
+            cout << "BIT " << j << " " << this->iMageVector[i]->image[j] << endl;
         }
-
-        // this->imVector.push_back(v1);
-
     }
 
-    // for (unsigned int i = 0; i < this->imVector.size(); i++) {
-    //     for (unsigned int j = 0; j < this->imVector[i].size(); j++){
-    //         cout << this->imVector[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-
-
-    // int manh = manhattanDistance( &(this->imVector)[0], &(this->imVector)[1] );
-    // cout << "distance is " << manh << endl;
+    int manh = manhattanDistance( &(this->iMageVector)[0]->image, &(this->iMageVector)[1]->image );
+    cout << "distance is " << manh << endl;
 
 }

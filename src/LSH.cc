@@ -14,7 +14,7 @@ int manhattanDistance(vector<int>* x, vector<int>* y) {
 
     for (unsigned int i = 0; i < x->size(); i++) {
         
-        cout << (*x)[i] << " and " << (*y)[i] << " and abs " << abs( (*x)[i] - (*y)[i] ) << endl;
+        // cout << (*x)[i] << " and " << (*y)[i] << " and abs " << abs( (*x)[i] - (*y)[i] ) << endl;
 
         sum += abs( (*x)[i] - (*y)[i] );
 
@@ -31,7 +31,7 @@ int concatInts(const int a, const int b) {
     // int c = (a << sizeof(b)) | b;
 
     // cout << "Gave " << a << " and " << b << " and result is " << c << endl;
-    cout << s1<<" "<<s2<<endl;
+    cout << s1 << " " << s2 << endl;
     return stoi( s1 + s2 );
 
 }
