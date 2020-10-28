@@ -17,17 +17,17 @@ int main(void) {
 
     delete s;
     
-    cout << "DOKIMI" << endl;
-    vector<int> p(35);
-    srand((unsigned) time(0));
-    for(unsigned int i=0; i<p.size(); i++){
-        p[i] = rand() % 255 + 1;
-       // cout <<p[i]<<endl;
-    }
-    HashTablePtr table = new HashTable(35,6,52,1,3) ;
-    cout << table->Table_Insert(&p)<<endl;
+    // cout << "DOKIMI" << endl;
+    // vector<int> p(35);
+    // srand((unsigned) time(0));
+    // for(unsigned int i=0; i<p.size(); i++){
+    //     p[i] = rand() % 255 + 1;
+    //    // cout <<p[i]<<endl;
+    // }
+    // HashTablePtr table = new HashTable(35,6,52,1,3) ;
+    // cout << table->Table_Insert(&p)<<endl;
 
-    delete table;
+    // delete table;
 
     return 0;
 }
