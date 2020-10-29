@@ -94,13 +94,13 @@ void dataInput::readMnist()
         cerr << "File could not be opened!\n";
     }
 
-    cout << "Vector has size " << this->iMageVector.size() << endl;
+    // cout << "Vector has size " << this->iMageVector.size() << endl;
 
-    for(int i=0; i<20; i++) {
+    // for(int i=0; i<20; i++) {
 
-        cout << "Vector " << i << " has size " << this->iMageVector[i]->image.size() << " and ID " << this->iMageVector[i]->Id << endl;
+    //     cout << "Vector " << i << " has size " << this->iMageVector[i]->image.size() << " and ID " << this->iMageVector[i]->Id << endl;
 
-    }
+    // }
 
 }
 
@@ -109,9 +109,7 @@ void dataInput::tryVector() {
 
     // for (unsigned int i = 0; i < 2; i++) {
     //     cout << "THIS IS IMAGE " << i << endl;
-    //     // for (unsigned int j = 0; j < this->iMageVector[i]->image.size(); j++){
-    //     for (unsigned int j = 20; j < 90; j++){
-    //     // for (unsigned int j = 350; j < 400; j++){
+    //     for (unsigned int j = 0; j < this->iMageVector[i]->image.size(); j++){
     //         cout << "BIT " << j << " " << this->iMageVector[i]->image[j] << endl;
     //     }
     // }

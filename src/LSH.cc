@@ -36,7 +36,3 @@ int concatInts(const int a, const int b) {
     return stoi( s1 + s2 );
 
 }
-
-vector<vector<int>*> LSH(HashTablePtr L){
-    
-}

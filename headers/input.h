@@ -22,6 +22,7 @@ class dataInput {
         int32_t cols;
         string inputFile;
 
+        // vector<inputForm*> *iMageVector;
         vector<inputForm*> iMageVector;
 
     public:

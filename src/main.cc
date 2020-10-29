@@ -3,6 +3,7 @@
 #include "../headers/HashTable.h"
 #include "../headers/input.h"
 #include "../headers/LSH.h"
+#include "../headers/kMeans.h"
 using namespace std;
 
 int main(void) {
@@ -10,11 +11,15 @@ int main(void) {
     cout << "Only just started!" << endl;
 
     dataInput *s = new dataInput("train-images.idx3-ubyte");
+    KMeans *kM = new KMeans(5);
 
     s->readMnist();
 
     s->tryVector();
 
+    kM->Clusterify(s);
+
+    delete kM;
     delete s;
     
     // cout << "DOKIMI" << endl;

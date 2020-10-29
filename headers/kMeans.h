@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include "input.h"
+#include "LSH.h"
 
 using namespace std;
 
@@ -31,7 +32,11 @@ class KMeans {
     public:
         KMeans(const int);
         ~KMeans();
-        void Clusterify(dataInput*);
-        void addCentroid(inputForm*);
         int getClusNum();
+        
+        vector<inputForm*> *getKMeansCentroids(dataInput*);
+
+        void Clusterify(dataInput*);
 };
+
+bool isIdInVector(const int, vector<inputForm*>*, const int);
