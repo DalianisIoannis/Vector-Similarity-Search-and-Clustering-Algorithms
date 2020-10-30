@@ -29,7 +29,7 @@ class dataInput {
         dataInput(const string);
         ~dataInput();
         void readMnist();
-        void tryVector();
+        void tryVector();   // just for try
         inputForm* getinputFormByNum(const int);
         int getiMageVectorSize();
 };

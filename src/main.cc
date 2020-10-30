@@ -1,14 +1,18 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
+
 #include "../headers/HashTable.h"
 #include "../headers/input.h"
 #include "../headers/LSH.h"
 #include "../headers/kMeans.h"
+
 using namespace std;
 
 int main(void) {
 
     cout << "Only just started!" << endl;
+    auto start = std::chrono::high_resolution_clock::now();
 
     dataInput *s = new dataInput("train-images.idx3-ubyte");
     KMeans *kM = new KMeans(5);
@@ -33,6 +37,10 @@ int main(void) {
     // cout << table->Table_Insert(&p)<<endl;
 
     // delete table;
+
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    std::cout << "Elapsed time: " << elapsed.count() << " s\n";
 
     return 0;
 }
