@@ -18,7 +18,7 @@ $(ODIR)/%.o: $(SDIR)/%.cc $(DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 
 $(EXECUTABLE): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) -O3
 
 clean:
 	rm -f $(ODIR)/*.o
@@ -27,6 +27,7 @@ clean:
 all: $(EXECUTABLE)
 
 valgrind:
+	# valgrind -v --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --leak-check=full ./run
 	valgrind --track-origins=yes --trace-children=yes --leak-check=full ./run
 
 exe:

@@ -60,7 +60,6 @@ int manhattanDistance(vector<int>* x, vector<int>* y) {
     }
     // PrintList(returnlist);
     return returnlist;
-
 }
 
 
