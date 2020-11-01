@@ -32,8 +32,8 @@ class dataInput {
         ~dataInput();
         
         void readMnist();
-        void tryVector();   // just for try
-        
+
+        int getImageSize();
         inputForm* getinputFormByNum(const int);
         
         int getiMageVectorSize();

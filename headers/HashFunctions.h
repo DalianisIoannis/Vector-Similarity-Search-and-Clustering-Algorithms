@@ -8,6 +8,7 @@ using namespace std;
 class h_funct{
     private:
         std::vector<int> *VectorS;
+        std::vector<int>* powers;
     public:
         h_funct(int,int);
         int hashValue(vector<int>* p, const int m, const int w, const int M);
@@ -40,3 +41,4 @@ class f_funct{
         f_funct(int,const int,const int,const int,const int);
         string fhashValue(vector<int>*);
 };
+float uniformNUMBERFUN(const float);

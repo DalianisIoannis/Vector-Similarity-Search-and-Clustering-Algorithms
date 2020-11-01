@@ -65,7 +65,7 @@ void dataInput::readMnist()
 
         for(int i=0; i<200; i++) {
         // for(int i=0; i<this->number_of_images; i++) {
-            
+           
             inputForm* imVec = new inputForm;
             imVec->image = new vector<int>(this->rows * this->cols);
 
@@ -101,23 +101,6 @@ void dataInput::readMnist()
     // for(int i=0; i<this->iMageVector->size(); i++) {
     //     cout << "   Vector " << i << " has size " << (*this->iMageVector)[i]->image->size() << " and ID " << (*this->iMageVector)[i]->Id << endl;
     // }
-
-}
-
-void dataInput::tryVector() {
-
-
-    // for (unsigned int i = 0; i < 2; i++) {
-    //     cout << "THIS IS IMAGE " << i << endl;
-    //     for (unsigned int j = 0; j < this->iMageVector[i]->image.size(); j++){
-    //         cout << "BIT " << j << " " << this->iMageVector[i]->image[j] << endl;
-    //     }
-    // }
-
-    int manh = manhattanDistance( (*this->iMageVector)[0]->image, (*this->iMageVector)[1]->image );
-    cout << "distance is " << manh << endl;
-    // cout << "IMAGE 0 has size " << (*this->iMageVector)[0]->image->size() << endl;
-
 }
 
 inputForm* dataInput::getinputFormByNum(const int num) {
@@ -132,6 +115,10 @@ int dataInput::getImagesNUM() {
     return this->number_of_images;
 }
 vector<int> *dataInput::RetTheImage(const int num) {
-
     return (*this->iMageVector)[num]->image;
+    // return this->iMageVector.size();
+}
+
+int dataInput::getImageSize(){
+    return (this->rows * this->cols);
 }

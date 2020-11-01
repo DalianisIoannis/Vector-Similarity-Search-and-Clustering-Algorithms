@@ -81,6 +81,28 @@ listinfo RangeSearch(HashTablePtr* L,int L_Num,int r,vector<int>* CheckVector){
             }
         }
     }
-    PrintList(returnlist);
+    // PrintList(returnlist);
+    return returnlist;
+}
+
+listinfo BruteForceNearest(vector<int>* query,dataInput* InputPicts,int Nneighs){
+    int currneigh = 0;
+    int Max_Distance = -1;
+    listinfo returnlist = CreateList();
+    int manhDistance;
+    for (int i = 0 ; i < InputPicts->getiMageVectorSize() ; i++){
+        manhDistance = manhattanDistance(&InputPicts->getinputFormByNum(i)->image,query);
+        if (currneigh < Nneighs){
+            InsertKNearestList(returnlist,InputPicts->getinputFormByNum(i),manhDistance,Nneighs);
+            currneigh++;
+            if (manhDistance > Max_Distance){
+            Max_Distance = manhDistance;
+            }
+        }
+        else if (manhDistance < Max_Distance){
+            InsertKNearestList(returnlist,InputPicts->getinputFormByNum(i),manhDistance,Nneighs);
+            Max_Distance = returnlist->tail->manh_dist;
+        }
+    }
     return returnlist;
 }
