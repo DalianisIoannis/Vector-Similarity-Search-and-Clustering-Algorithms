@@ -15,7 +15,8 @@ int main(void) {
     auto start = std::chrono::high_resolution_clock::now();
 
     dataInput *s = new dataInput("train-images.idx3-ubyte");
-    KMeans *kM = new KMeans(5);
+    // KMeans *kM = new KMeans(5);
+    KMeans *kM = new KMeans(10);
 
     s->readMnist();
 

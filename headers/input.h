@@ -9,7 +9,8 @@ using namespace std;
 
 typedef struct inputForm{
 
-    vector<int> image;
+    vector<int> *image;
+    // vector<int> image;
     int Id;
 
 } inputForm;
@@ -23,13 +24,20 @@ class dataInput {
         string inputFile;
 
         // vector<inputForm*> *iMageVector;
-        vector<inputForm*> iMageVector;
+        vector<inputForm*> *iMageVector;
 
     public:
+
         dataInput(const string);
         ~dataInput();
+        
         void readMnist();
         void tryVector();   // just for try
+        
         inputForm* getinputFormByNum(const int);
+        
         int getiMageVectorSize();
+        int getImagesNUM();
+
+        vector<int> *RetTheImage(const int);
 };

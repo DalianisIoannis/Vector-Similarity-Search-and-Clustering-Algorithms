@@ -10,11 +10,14 @@ dataInput::~dataInput()
 {
     cout <<"I'm destroying dataInput"<<endl;
 
-    for (unsigned int i = 0; i < this->iMageVector.size(); i++) {
+    for (unsigned int i = 0; i < this->iMageVector->size(); i++) {
 
-        delete this->iMageVector[i];
+        delete (*this->iMageVector)[i]->image;
+        delete (*this->iMageVector)[i];
 
     }
+
+    delete this->iMageVector;
 
 }
 
@@ -39,6 +42,7 @@ void dataInput::readMnist()
             cerr << "File IO error!\n";
         }
         this->number_of_images = __builtin_bswap32(this->number_of_images);
+        // this->number_of_images = 200; /////////////////////////////////////////////////////////////////////////////////////
         cout << "Images " << this->number_of_images << endl;
 
 
@@ -57,26 +61,29 @@ void dataInput::readMnist()
         this->cols = __builtin_bswap32(this->cols);
         cout << "Columns " << this->cols << endl;
 
-        // this->iMageVector.resize(this->number_of_images);
-        this->iMageVector.resize(100);
+        this->iMageVector = new vector<inputForm*>(this->number_of_images);
 
         int Id=0;
 
-        for(int i=0; i<100; i++) {
-        // for(int i=0; i<this->number_of_images; i++) {
+        // for(int i=0; i<200; i++) {
+        for(int i=0; i<this->number_of_images; i++) {
             
             inputForm* imVec = new inputForm;
+            imVec->image = new vector<int>(this->rows * this->cols);
+            // imVec->image = new vector<int>();
 
             imVec->Id = Id++;
             
+            int counterPix = 0;
             for(int j=0; j<this->rows; j++) {
                 for(int k=0; k<this->cols; k++) {
 
                     unsigned char temp=0;
                     file.read( (char*)&temp, sizeof(temp) );
 
-                    (imVec->image).push_back((int)temp);
-
+                    // (imVec->image).push_back((int)temp);
+                    // (*imVec->image).push_back((int)temp);
+                    (*imVec->image)[counterPix++] = ((int)temp);
 
                     if(!file) {
                         cerr << "File IO error!\n";
@@ -84,7 +91,8 @@ void dataInput::readMnist()
                 }
             }
 
-            this->iMageVector[i] = imVec;
+            // this->iMageVector[i] = imVec;
+            (*this->iMageVector)[i] = imVec;
 
         }
 
@@ -94,12 +102,9 @@ void dataInput::readMnist()
         cerr << "File could not be opened!\n";
     }
 
-    // cout << "Vector has size " << this->iMageVector.size() << endl;
-
-    // for(int i=0; i<20; i++) {
-
-    //     cout << "Vector " << i << " has size " << this->iMageVector[i]->image.size() << " and ID " << this->iMageVector[i]->Id << endl;
-
+    // cout << "iMageVector has sizeeeeeeee " << this->iMageVector->size() << endl;
+    // for(int i=0; i<this->iMageVector->size(); i++) {
+    //     cout << "   Vector " << i << " has size " << (*this->iMageVector)[i]->image->size() << " and ID " << (*this->iMageVector)[i]->Id << endl;
     // }
 
 }
@@ -114,15 +119,24 @@ void dataInput::tryVector() {
     //     }
     // }
 
-    int manh = manhattanDistance( &(this->iMageVector)[0]->image, &(this->iMageVector)[1]->image );
+    int manh = manhattanDistance( (*this->iMageVector)[0]->image, (*this->iMageVector)[1]->image );
     cout << "distance is " << manh << endl;
+    // cout << "IMAGE 0 has size " << (*this->iMageVector)[0]->image->size() << endl;
 
 }
 
 inputForm* dataInput::getinputFormByNum(const int num) {
-    return this->iMageVector[num];
+    return (*this->iMageVector)[num];
 }
 
 int dataInput::getiMageVectorSize() {
-    return this->iMageVector.size();
+    return (*this->iMageVector).size();
+}
+
+int dataInput::getImagesNUM() {
+    return this->number_of_images;
+}
+vector<int> *dataInput::RetTheImage(const int num) {
+
+    return (*this->iMageVector)[num]->image;
 }
