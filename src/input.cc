@@ -42,7 +42,7 @@ void dataInput::readMnist()
             cerr << "File IO error!\n";
         }
         this->number_of_images = __builtin_bswap32(this->number_of_images);
-        // this->number_of_images = 200; /////////////////////////////////////////////////////////////////////////////////////
+        this->number_of_images = 200; /////////////////////////////////////////////////////////////////////////////////////
         cout << "Images " << this->number_of_images << endl;
 
 
@@ -65,12 +65,11 @@ void dataInput::readMnist()
 
         int Id=0;
 
-        // for(int i=0; i<200; i++) {
-        for(int i=0; i<this->number_of_images; i++) {
+        for(int i=0; i<200; i++) {
+        // for(int i=0; i<this->number_of_images; i++) {
             
             inputForm* imVec = new inputForm;
             imVec->image = new vector<int>(this->rows * this->cols);
-            // imVec->image = new vector<int>();
 
             imVec->Id = Id++;
             
@@ -81,7 +80,6 @@ void dataInput::readMnist()
                     unsigned char temp=0;
                     file.read( (char*)&temp, sizeof(temp) );
 
-                    // (imVec->image).push_back((int)temp);
                     // (*imVec->image).push_back((int)temp);
                     (*imVec->image)[counterPix++] = ((int)temp);
 
@@ -91,7 +89,6 @@ void dataInput::readMnist()
                 }
             }
 
-            // this->iMageVector[i] = imVec;
             (*this->iMageVector)[i] = imVec;
 
         }

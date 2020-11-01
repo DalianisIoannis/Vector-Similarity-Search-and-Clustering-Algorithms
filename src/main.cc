@@ -14,9 +14,10 @@ int main(void) {
     cout << "Only just started!" << endl;
     auto start = std::chrono::high_resolution_clock::now();
 
-    dataInput *s = new dataInput("train-images.idx3-ubyte");
+    // dataInput *s = new dataInput("train-images.idx3-ubyte");
+    dataInput *s = new dataInput("t10k-images.idx3-ubyte");
     // KMeans *kM = new KMeans(5);
-    KMeans *kM = new KMeans(10);
+    KMeans *kM = new KMeans(4);
 
     s->readMnist();
 

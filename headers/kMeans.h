@@ -17,8 +17,6 @@ using namespace std;
 class cluster {
     private:
         
-        // inputForm* centroid;
-
         vector<int>* indexesOfAssVecs;
 
         vector<int>* centroidVec; // centroid vector
@@ -27,8 +25,6 @@ class cluster {
 
         cluster();
         ~cluster();
-        // void informCentroid(inputForm*);
-        // inputForm* getCentr();
 
         void NewCentroidVec(vector<int>*);
         void CopyCenVec(vector<int>*);
@@ -37,7 +33,9 @@ class cluster {
         void DELCentroidVec();
         vector<int>* returncentroidVec();
 
-        void initindexesOfAssVecs(const int);
+        void initindexesOfAssVecs();
+        void InputNewindexesOfAssVecs(const int, const int);
+        int ReturnNewindexesOfAssVecsSize();
         vector<int>* returnindexesOfAssVecs();
 
         void addVecToclus(const int);
@@ -58,9 +56,14 @@ class KMeans {
         void Clusterify(dataInput*);
         
         int returnClusterIndex(inputForm*);
+        int returnClusterIndexFORB(inputForm*);
         void assignData(dataInput*);
+
+        void Silhouette(dataInput*);
+
+        vector<int>* computeB(dataInput*);
 };
 
-// bool isIdInVector(const int, vector<inputForm*>*, const int);
+bool isIdInVector(const int, vector<inputForm*>*, const int);
 float uniformNUMBER(const float);
 int getVecMedian(vector<int>*);
