@@ -24,5 +24,5 @@ listnode SearchListID(listinfo,int);
 void DeleteList(listinfo);
 void DeleteListNodes(listinfo,listnode);
 void PrintList(listinfo,ofstream&);
-void PrintNearestList(listinfo,listinfo,ofstream&);
+void PrintNearestList(listinfo,listinfo,ofstream&,string);
 int ReturnListSize(listinfo);

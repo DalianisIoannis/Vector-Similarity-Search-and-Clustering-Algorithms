@@ -120,13 +120,13 @@ void PrintList(listinfo Mylist,ofstream& file){
     }
 }
 
-void PrintNearestList(listinfo listLSH,listinfo listBrute,ofstream& file){
+void PrintNearestList(listinfo listLSH,listinfo listBrute,ofstream& file,string method){
     int i = 1;
     listnode LSHnode = listLSH->Head;
     listnode Brutenode = listBrute->Head;
     while (LSHnode != NULL) {
             file <<"Nearest neighbor-"<<i<< ": " << LSHnode->data->Id<<endl;
-            file <<"distanceLSH: "<<LSHnode->manh_dist<<endl;
+            file <<"distance"<<method<<": "<<LSHnode->manh_dist<<endl;
             file <<"distanceTrue: "<<Brutenode->manh_dist<<endl;
             LSHnode = LSHnode->next;
             Brutenode = Brutenode->next;

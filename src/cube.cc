@@ -164,3 +164,78 @@ listinfo knNearestNeighbors(CubeTablePtr* L,int kneigh,int probes,int M,vector<i
     return returnlist;
 }    
 
+listinfo cubeRangeSearch(CubeTablePtr* L,int probes,int M,vector<int>* query){
+   int Max_Distance = -1;
+    string String_Index;
+    int i,HammingDistance = 2,TableIndex,numProbes = 0;
+    listinfo returnlist = CreateList();         //initialise useful variables
+    HashBucketPtr BucketsArray;
+    list<inputForm*> vectorlist;
+    vector<int> ProbsIndex;
+    std::list<inputForm*>::iterator it;
+    int manhattanValue,PhotosCheck = 0;
+    vector<list<inputForm*>> allprobs;
+    /////////////////
+    if (probes > (*L)->get_Buckets_Number()){
+        cout <<"Max probes is "<<(*L)->get_Buckets_Number()<<endl;
+        probes = (*L)->get_Buckets_Number();
+    }
+    BucketsArray = (*L)->get_HashBucketsArray();                        //fetch buckets array
+    String_Index = (*L)->get_Hash_Function()->fhashValue(Query);    //compute hash function of query vector
+    TableIndex = stoi(String_Index,0,2);
+    
+    allprobs.push_back(BucketsArray[TableIndex].get_Vector_List());
+    numProbes++;
+    if (probes > 1){
+        ProbsIndex = findNearVerticlesOne(&String_Index);
+        for (unsigned int i = 0 ; i < ProbsIndex.size() ; i++){
+            allprobs.push_back(BucketsArray[i].get_Vector_List());
+            numProbes++;
+            if (numProbes == probes){
+                break;
+            }
+        }
+    }
+    while (numProbes < probes){
+        ProbsIndex = findNearVerticles((*L)->get_Buckets_Number(),&String_Index,HammingDistance);
+        for (unsigned i = 0 ; i < ProbsIndex.size() ; i++){
+            allprobs.push_back(BucketsArray[i].get_Vector_List());
+            numProbes++;
+            if (numProbes == probes){
+                break;
+            }
+        }
+        HammingDistance++;
+    }
+    for (i = 0 ; i < probes ; i++){
+        cout << "Prob :"<<i<<endl;        
+        vectorlist = allprobs[i];
+        for (it = vectorlist.begin() ; it != vectorlist.end() ; ++it){          //parse bucket
+            manhattanValue = manhattanDistance(Query,&(*it)->image);      //compute manhattan distance for each elem of bucket
+            cout <<"ID "<< (*it)->Id <<" Manhattan Distance:"<<manhattanValue<<endl;
+            if (PhotosCheck < kneigh){
+                if (SearchKNearestList(returnlist,(*it)->Id,manhattanValue) == NULL){                          //search of duplicate elements,if Manhattan is better delete
+                    InsertKNearestList(returnlist,(*it),manhattanValue,kneigh);
+                }
+                if (manhattanValue > Max_Distance){
+                    Max_Distance = manhattanValue;
+                }
+            }
+            else if (manhattanValue < Max_Distance){
+                if (SearchKNearestList(returnlist,(*it)->Id,manhattanValue) == NULL){
+                    InsertKNearestList(returnlist,(*it),manhattanValue,kneigh);
+                }
+                Max_Distance = returnlist->tail->manh_dist;
+            }
+            PhotosCheck++;
+            if (PhotosCheck >= M){
+                cout <<"M is reached"<<endl;
+                return returnlist;
+            }
+        }
+    }
+    // PrintList(returnlist);
+    return returnlist;
+}
+
+

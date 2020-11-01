@@ -15,7 +15,6 @@ int main(int argc,char* argv[]) {
   int L = 5;
   int N = 1;
   int R = 10000;
-  int m,M;
   int i,j;
   std::string queryfile;
   std::string inputfile;
@@ -50,11 +49,14 @@ for (i = 1 ; i < argc ; i+=2){
 
   dataInput *inputset = new  dataInput(inputfile);
   inputset->readMnist();
-  m = pow(2,31) - 5;
+  int m = pow(2,31) - 5;
+  int w = 10;
+  int M = inputset->getiMageVectorSize() / 8;
+
   HashTablePtr Tables[L];
 
   for (i = 0 ; i < L ; i++){
-    Tables[i] = new HashTable(inputset->getImageSize(),k,50,m,200) ;
+    Tables[i] = new HashTable(inputset->getImageSize(),k,w,m,M) ;
     for (j = 0 ; j < inputset->getiMageVectorSize() ; j++){
         Tables[i]->Table_Insert(inputset->getinputFormByNum(j));
     }
@@ -80,7 +82,7 @@ for (i = 1 ; i < argc ; i+=2){
     std::chrono::duration<double>tTrue = finish - start;
 
     file <<"Query: "<<queryset->getinputFormByNum(i)->Id<<endl;
-    PrintNearestList(outputList,outputListBrute,file);
+    PrintNearestList(outputList,outputListBrute,file,"LSH");
     file <<"tLSH: "<<tLSH.count()<<endl;
     file <<"tTrue: "<<tTrue.count()<<endl;
     file <<"R-near neighbors"<<endl;
