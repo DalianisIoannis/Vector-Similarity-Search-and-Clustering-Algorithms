@@ -1,5 +1,7 @@
 #include <iostream>
 #include "../headers/LSH.h"
+#include <chrono>
+
 
 listinfo CreateList(){
     listinfo NewList = (listinfo)malloc(sizeof(struct linfo));
@@ -49,7 +51,7 @@ listnode InsertKNearestList(listinfo MyList,inputForm* ToInsert,int manhattan_di
             listnode todel = MyList->tail;
             MyList->tail = MyList->tail->prev;
             MyList->tail->next = NULL;
-            delete todel;
+            free(todel);
             MyList->Num_Elems--;
         }
     }
@@ -109,12 +111,26 @@ listnode SearchListID(listinfo Mylist,int id){
     return NULL;
 }
 
-void PrintList(listinfo Mylist){
+void PrintList(listinfo Mylist,ofstream& file){
     listnode printnode;
     printnode = Mylist->Head;
     while (printnode != NULL) {
-        cout <<"ID "<< printnode->data->Id << " with distance " << printnode->manh_dist<<endl;
+        file << printnode->data->Id<<endl;
         printnode = printnode->next;
+    }
+}
+
+void PrintNearestList(listinfo listLSH,listinfo listBrute,ofstream& file){
+    int i = 1;
+    listnode LSHnode = listLSH->Head;
+    listnode Brutenode = listBrute->Head;
+    while (LSHnode != NULL) {
+            file <<"Nearest neighbor-"<<i<< ": " << LSHnode->data->Id<<endl;
+            file <<"distanceLSH: "<<LSHnode->manh_dist<<endl;
+            file <<"distanceTrue: "<<Brutenode->manh_dist<<endl;
+            LSHnode = LSHnode->next;
+            Brutenode = Brutenode->next;
+        i++;
     }
 }
 

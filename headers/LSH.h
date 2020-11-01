@@ -19,9 +19,8 @@ int h2(vector<int>* p, vector<int>* s, const int m, const int w, const int M);
 
 int g(vector<int>* p, const int k, const int w, const int m, const int M);
 
-int concatInts(unsigned int a, unsigned int b);
-
 vector<int>* getVectorS(const unsigned int size, const int w);
 listinfo kNearestNeighbors(HashTablePtr*,int,int,vector<int>*);
 listinfo RangeSearch(HashTablePtr*,int,int,vector<int>*);
+listinfo BruteForceNearest(vector<int>* query,dataInput* InputPicts,int Nneighs);
 void tryHash();

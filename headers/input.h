@@ -28,7 +28,7 @@ class dataInput {
         dataInput(const string);
         ~dataInput();
         void readMnist();
-        void tryVector();
+        int getImageSize();
         inputForm* getinputFormByNum(const int);
         int getiMageVectorSize();
 };

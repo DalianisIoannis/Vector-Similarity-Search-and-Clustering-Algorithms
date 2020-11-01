@@ -17,23 +17,24 @@ void printVector(vector<int> *vec){
 
 h_funct::h_funct(int w,int size){
     this->VectorS = new vector<int> (size);
+    this->powers = new vector<int> ;
     for(unsigned int i=0; i<(*VectorS).size(); i++) {
-        (*VectorS)[i] = rand() % w; // +1 ?
+        (*VectorS)[i] = (int)uniformNUMBERFUN( (float)w)  ;
     }
     // printVector(this->VectorS);
 }
 
 int h_funct::hashValue(vector<int>* p, const int m, const int w, const int M) {
     
-    // return h()
+// return h()
     long int ret = 0;
-    int ekth = 0;
 
-    for(unsigned int i=0; i< p->size(); i++) {
-        // cout <<(*this->VectorS)[i]<<endl;
-        ret += abs(long(pow(m, ekth++)) * ai( (*p)[i], (*this->VectorS)[i], w ));
+    for(int i=0; i < p->size(); i++) {
+       if ((int)(this->powers->size()-1) < i){
+            powers->push_back((int)pow(m % M,i));
+       }
+        ret += abs((*powers)[i] * (ai( (*p)[i], (*this->VectorS)[i], w ) % M) % M);
     }
-
     return ret;
 }
 
@@ -59,9 +60,9 @@ int g_funct::ghashValue(vector<int>* p) {
         hashRet = hashRet << 32 / this-> k;
         hashRet = hashRet | this->VectorH[i].hashValue( p, this->m, this->w, this->M );
     }
-    cout <<hashRet<< " ";
+    // cout <<hashRet<< " ";
     hashRet = hashRet % this->M;
-    cout << "hashRet is " << hashRet << endl;
+    // cout << "hashRet is " << hashRet << endl;
     return hashRet;
 
 }
@@ -110,4 +111,11 @@ string f_funct::fhashValue(vector<int>* p){
         }
     }
     return toRet;
+}
+
+float uniformNUMBERFUN(const float maxSize) {
+    std::random_device rd;      //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd());     //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_real_distribution<> distrib(0.0, maxSize);
+    return distrib(gen);
 }

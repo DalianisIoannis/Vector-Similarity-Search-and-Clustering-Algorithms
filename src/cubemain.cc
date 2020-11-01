@@ -6,16 +6,13 @@
 #include <string.h>
 #include <ctime>
 #include <chrono>
-
-
 using namespace std;
 
 int main(int argc,char* argv[]) {
-  int k = 14;
+  int k = 4;
   int L = 5;
   int N = 1;
   int R = 10000;
-  int m,M;
   int i,j;
   std::string queryfile;
   std::string inputfile;
@@ -31,7 +28,7 @@ for (i = 1 ; i < argc ; i+=2){
   else if (strcmp(argv[i],"-k") == 0){
     k = atoi(argv[i+1]);
   }
-  else if (strcmp(argv[i],"-L") == 0){
+  else if (strcmp(argv[i],"-M") == 0){
     L = atoi(argv[i+1]);
   }
   else if (strcmp(argv[i],"-o") == 0){
@@ -47,14 +44,11 @@ for (i = 1 ; i < argc ; i+=2){
 
   dataInput *queryset = new dataInput(queryfile);
   queryset->readMnist();
-
   dataInput *inputset = new  dataInput(inputfile);
   inputset->readMnist();
-  m = pow(2,31) - 5;
-  HashTablePtr Tables[L];
-
+  CubeTablePtr Table;
   for (i = 0 ; i < L ; i++){
-    Tables[i] = new HashTable(inputset->getImageSize(),k,50,m,200) ;
+    Table = new CubeTable(inputset->getImageSize(),k,3000,2,600) ;
     for (j = 0 ; j < inputset->getiMageVectorSize() ; j++){
         Tables[i]->Table_Insert(inputset->getinputFormByNum(j));
     }
@@ -75,10 +69,10 @@ for (i = 1 ; i < argc ; i+=2){
     std::chrono::duration<double> tLSH = finish - start;
 
     start = std::chrono::high_resolution_clock::now();
-    outputListBrute = BruteForceNearest(&queryset->getinputFormByNum(i)->image,inputset,N);
+    outputListBrute = BruteForceNearest(&inputset->getinputFormByNum(i)->image,inputset,N);
     finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double>tTrue = finish - start;
-
+    
     file <<"Query: "<<queryset->getinputFormByNum(i)->Id<<endl;
     PrintNearestList(outputList,outputListBrute,file);
     file <<"tLSH: "<<tLSH.count()<<endl;
