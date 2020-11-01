@@ -2,6 +2,7 @@
 #include <list>
 #include <vector>
 #include "HashFunctions.h"
+#include "list.h"
 
 using namespace std;
 typedef class HashBucket * HashBucketPtr;
@@ -10,14 +11,14 @@ typedef class HashTable * HashTablePtr;
 class HashBucket{
     private:
         int Bucket_Elements;
-        std::list<std::vector<int>> vector_list;
+        std::list<inputForm*> vector_list;
     public:
         HashBucket();
         ~HashBucket();
         void increase_Bucket_Elements();
         int get_Bucket_Elements();
-        list<std::vector<int>> get_Vector_List();
-        void Bucket_Insert(vector <int>*);        
+        list<inputForm*> get_Vector_List();
+        void Bucket_Insert(inputForm*);        
 };
 
 
@@ -26,7 +27,6 @@ class HashTable{
         int Table_Elements;
         int Buckets_Number;
         HashBucketPtr HashBucketsArray;
-        std::list<std::vector<int>> List_S_Vectors;
         g_funct* g_HashFunction;
     public:
         HashTable(int, const int, const int , const int , const int );
@@ -35,8 +35,7 @@ class HashTable{
         int get_Table_Elements();
         HashBucketPtr get_HashBucketsArray();
         int get_Buckets_Number();
-        int Table_Insert(vector <int>*);
+        int Table_Insert(inputForm*);
         g_funct* get_Hash_Function();
 };
-int funct(void*);
 void printVector(vector<int>*);

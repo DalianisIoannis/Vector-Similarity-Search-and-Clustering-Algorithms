@@ -1,4 +1,3 @@
-#include "../headers/input.h"
 #include "../headers/LSH.h"
 
 dataInput::dataInput(const string iFile):inputFile(iFile)
@@ -20,7 +19,6 @@ dataInput::~dataInput()
 
 void dataInput::readMnist()
 {
-
     ifstream file (this->inputFile, ios::binary);
 
     if(file.is_open()) {
@@ -57,13 +55,14 @@ void dataInput::readMnist()
         this->cols = __builtin_bswap32(this->cols);
         cout << "Columns " << this->cols << endl;
 
-        // this->iMageVector.resize(this->number_of_images);
-        this->iMageVector.resize(100);
+          this->iMageVector.resize(this->number_of_images);
+        //this->iMageVector.resize(3000);
 
         int Id=0;
 
-        for(int i=0; i<100; i++) {
-        // for(int i=0; i<this->number_of_images; i++) {
+        // for(int i=0; i<3000; i++) {
+        for(int i=0; i<this->number_of_images; i++) {
+             cout <<i<<endl;
             
             inputForm* imVec = new inputForm;
 

@@ -2,7 +2,7 @@
 #include <list>
 #include <vector>
 #include <algorithm>
-
+#include "RedBlack.h"
 using namespace std;
 
 class h_funct{
@@ -25,4 +25,18 @@ class g_funct{
     public:
         g_funct(int size, const int, const int, const int, const int);
         int ghashValue(vector<int>*) ;
+};
+
+
+class f_funct{
+    private:
+        h_funct* VectorH;
+        int k;
+        int w;
+        int m;
+        int M;
+        tree RedBlackMatch;
+    public:
+        f_funct(int,const int,const int,const int,const int);
+        string fhashValue(vector<int>*);
 };

@@ -16,13 +16,13 @@ int HashBucket::get_Bucket_Elements(){
     return this->Bucket_Elements;
 }
 
-void HashBucket::Bucket_Insert(std::vector <int>* PictureVector){
-    this->vector_list.push_back(*PictureVector);    
+void HashBucket::Bucket_Insert(inputForm* PictureVector){
+    this->vector_list.push_back(PictureVector);    
     this->increase_Bucket_Elements();
     cout << "I've pushed the element into the vector list with " << this->Bucket_Elements <<" elements" <<endl;
 }
 
-list<vector<int>> HashBucket::get_Vector_List(){
+list<inputForm*> HashBucket::get_Vector_List(){
     return this->vector_list;
 }
 
@@ -54,8 +54,8 @@ int HashTable::get_Buckets_Number(){
     return this->Buckets_Number;
 }
 
-int HashTable::Table_Insert(std::vector <int>* PictureVector){
-    int Table_Index = this->get_Hash_Function()->ghashValue(PictureVector);
+int HashTable::Table_Insert(inputForm* PictureVector){
+    int Table_Index = this->get_Hash_Function()->ghashValue(&(PictureVector->image));
     this->HashBucketsArray[Table_Index].Bucket_Insert(PictureVector);
     this->increase_Table_Elements();
     cout <<"total "<<this->get_Table_Elements()<<" elements"<<endl;
