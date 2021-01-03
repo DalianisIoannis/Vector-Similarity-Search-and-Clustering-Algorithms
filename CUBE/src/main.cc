@@ -68,26 +68,34 @@ for (i = 1 ; i < argc ; i+=2){
     listinfo outputList = CreateList();
     listinfo outputListBrute = CreateList();
     listinfo Rnear = CreateList();
+
     for (int i = 0 ; i < queryset->getiMageVectorSize() ; i++){   
 
-    auto start = std::chrono::high_resolution_clock::now();
-    outputList = knNearestNeighbors(&Table,N,probes,M,queryset->getinputFormByNum(i)->image);
-    auto finish = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> tHypercube = finish - start;
-    start = std::chrono::high_resolution_clock::now();
-    outputListBrute = BruteForceNearest(queryset->getinputFormByNum(i)->image,inputset,N);
-    finish = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double>tTrue = finish - start;
-    
-    file <<"Query: "<<queryset->getinputFormByNum(i)->Id<<endl;
-    PrintNearestList(outputList,outputListBrute,file,"Hypercube");
-    file <<"tHypercube: "<< tHypercube.count()<<endl;
-    file <<"tTrue: "<<tTrue.count()<<endl;
-    file <<"R-near neighbors"<<endl;
-    Rnear = cubeRangeSearch(&Table,probes,R,queryset->getinputFormByNum(i)->image,R);
-    PrintList(Rnear,file);
-    file <<endl;
+      auto start = std::chrono::high_resolution_clock::now();
+      outputList = knNearestNeighbors(&Table,N,probes,M,queryset->getinputFormByNum(i)->image);
+      auto finish = std::chrono::high_resolution_clock::now();
+      std::chrono::duration<double> tHypercube = finish - start;
+      start = std::chrono::high_resolution_clock::now();
+      outputListBrute = BruteForceNearest(queryset->getinputFormByNum(i)->image,inputset,N);
+      finish = std::chrono::high_resolution_clock::now();
+      std::chrono::duration<double>tTrue = finish - start;
+      
+      file <<"Query: "<<queryset->getinputFormByNum(i)->Id<<endl;
+      PrintNearestList(outputList,outputListBrute,file,"Hypercube");
+      file <<"tHypercube: "<< tHypercube.count()<<endl;
+      file <<"tTrue: "<<tTrue.count()<<endl;
+      file <<"R-near neighbors"<<endl;
+      Rnear = cubeRangeSearch(&Table,probes,R,queryset->getinputFormByNum(i)->image,R);
+      PrintList(Rnear,file);
+      file <<endl;
+
+      // DeleteList(outputList);
+      // DeleteList(outputListBrute);
+      // DeleteList(Rnear);
     }
+
+    delete inputset;
+    delete queryset;
 
     return 0;
 }

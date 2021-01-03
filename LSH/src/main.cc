@@ -44,6 +44,7 @@ for (i = 1 ; i < argc ; i+=2){
   }
 }
   dataInput *queryset = new dataInput(queryfile);
+  
   queryset->readMnist();
 
   dataInput *inputset = new  dataInput(inputfile);
@@ -99,5 +100,7 @@ for (i = 1 ; i < argc ; i+=2){
     file <<endl;
     }
 
+	delete queryset;
+  delete inputset;
     return 0;
 }
