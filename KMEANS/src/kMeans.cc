@@ -46,6 +46,14 @@ int KMeans::getClusNum() {
     return this->numOfclusters;
 }
 
+void cluster::print_assigned_vectors_ids() {
+    for(long unsigned int i=0; i<this->indexesOfAssVecs->size(); i++) {
+        // cout <<"        " << (*this->indexesOfAssVecs)[i] << endl;
+        cout << " " << (*this->indexesOfAssVecs)[i];
+    }
+    cout << endl;
+}
+
 bool isIdInVector(const int ID, vector<inputForm*> *centrAr, const int enteredNums)
 {
     // cout << "   IN isIdInVector centrAr->size() " << centrAr->size() << " AND enteredNums " << enteredNums << endl;
@@ -119,16 +127,18 @@ void KMeans::ClusterifyWITHLsh(dataInput* data) {
     delete centrAr;
 }
 
-void KMeans::Clusterify(dataInput* data) {
+void KMeans::Clusterify(dataInput* data, std::string output_file) {
+
+    // ofstream myfile;
+    // myfile.open (output_file);
+    // myfile << "Eimai from Means.\n";
 
     vector<inputForm*> *centrAr = this->getKMeansCentroids(data);
     
     cout << "Initial Cntroids" << endl;
     for(int i=0; i<this->getClusNum(); i++) {
-        cout << (*centrAr)[i]->Id << endl;
-    }
 
-    for(int i=0; i<this->getClusNum(); i++) {
+        cout << (*centrAr)[i]->Id << endl;
 
         vector<int>* tmp = (*centrAr)[i]->image;
         
@@ -136,14 +146,26 @@ void KMeans::Clusterify(dataInput* data) {
         
     }
 
-    for(int i=0; i<this->getClusNum(); i++) {
-        cout << "CLUSTER " << i << " has d 0 " << (*(*this->clusterAr)[i]->returncentroidVec())[0] << " and 1 " << (*(*this->clusterAr)[i]->returncentroidVec())[1] << " and size " << (*this->clusterAr)[i]->returncentroidVec()->size() << endl;
-        // for(unsigned int j=0; j< (*this->clusterAr)[i]->returncentroidVec()->size(); j++) { cout << "   stoixeio " << j << " einai " << (*(*this->clusterAr)[i]->returncentroidVec())[j] << endl; }
-    }
+    // for(int i=0; i<this->getClusNum(); i++) {
+    //     cout << "CLUSTER " << i << " has d 0 " << (*(*this->clusterAr)[i]->returncentroidVec())[0] << " and 1 " << (*(*this->clusterAr)[i]->returncentroidVec())[1] << " and size " << (*this->clusterAr)[i]->returncentroidVec()->size() << endl;
+    //     // for(unsigned int j=0; j< (*this->clusterAr)[i]->returncentroidVec()->size(); j++) { cout << "   stoixeio " << j << " einai " << (*(*this->clusterAr)[i]->returncentroidVec())[j] << endl; }
+    // }
 
     this->assignData(data);
 
-    cout << "RETURN FROM CLUSTERING" << endl;
+    cout << "RETURN FROM CLUSTERING" << endl << endl;
+
+    // print images of every cluster
+    for(int i=0; i<this->getClusNum(); i++) {
+        
+        cout << "\n   Centroid vector of cluster " << i << endl;
+        for(long unsigned int j=0; j<(*this->clusterAr)[i]->centroidVec->size(); j++) {   // centroid
+            cout << (*(*this->clusterAr)[i]->centroidVec)[j] << " ";
+        }
+        
+        cout << "\n   Assigned vectors of cluster " << i << endl;
+        (*this->clusterAr)[i]->print_assigned_vectors_ids();
+    }
 
     this->Silhouette(data);
 
@@ -220,7 +242,6 @@ void KMeans::assignData(dataInput* data) {
             if((*infoAr)[i] != ClusInd) { // not in that cluster already
             
                 (*infoAr)[i] = ClusInd;
-
                 // if nothing changed
                 StayedSame = false;
 
@@ -237,19 +258,18 @@ void KMeans::assignData(dataInput* data) {
             (*this->clusterAr)[(*infoAr)[i]]->addVecToclus(i);
         }
 
-        for(int i=0; i<this->getClusNum(); i++) {
-            cout << "   Cluster " << i << " has :" << (*this->clusterAr)[i]->ReturnNewindexesOfAssVecsSize() << " assigned " << endl;
-            // for(int k=0; k<(*this->clusterAr)[i]->ReturnNewindexesOfAssVecsSize(); k++) { }
-        }
+        // for(int i=0; i<this->getClusNum(); i++) {
+        //     cout << "   Cluster " << i << " has :" << (*this->clusterAr)[i]->ReturnNewindexesOfAssVecsSize() << " assigned " << endl;
+        // }
 
         // change centroids
         if(StayedSame==false) {  // compute new centroids if didn t change
 
-            cout << "   FOR REAR " << endl;
+            // cout << "   FOR REAR " << endl;
 
             for(int clus=0; clus<this->getClusNum(); clus++) {   // for every cluster
 
-                cout << "       Cluster " << clus << endl;
+                // cout << "       Cluster " << clus << endl;
                 
                 // int fjsnjcdf=0;
                 int newCIndex = 0;
@@ -290,7 +310,6 @@ void KMeans::assignData(dataInput* data) {
             cout << endl;
         }
 
-
         reps++;
         
         if( reps<threshold && StayedSame==false) {
@@ -298,10 +317,9 @@ void KMeans::assignData(dataInput* data) {
                 (*this->clusterAr)[i]->deleteindexesOfAssVecs();
             }
         }
-
     }
 
-    cout << "Indexing " << endl;
+    // cout << "Indexing " << endl;
     // for(unsigned int j=0; j<infoAr->size(); j++) { cout << "   Vec " << j << " in cluster " << (*infoAr)[j] << endl; }
 
     // for(int i=0; i<this->getClusNum(); i++) {
@@ -470,18 +488,16 @@ vector<inputForm*>* KMeans::getKMeansCentroids(dataInput* data) {
 
     }
 
-
     return centrAr;
 }
 
 void KMeans::Silhouette(dataInput* data) {
 
-
     int dataSize = data->getiMageVectorSize(); // num of vectors
     vector<int> *A = new vector<int>(dataSize); // array of min dis from vec to centroids
-    cout << "A has size " << A->size() << endl;
+    // cout << "A has size " << A->size() << endl;
 
-    cout << "IN Silhouette " << endl;
+    cout << endl << "IN Silhouette " << endl;
     for(int i=0; i<this->getClusNum(); i++) {
         // cout << "CLUSTER " << i << endl;
         cout << "Cluster " << i << " has :" << (*this->clusterAr)[i]->ReturnNewindexesOfAssVecsSize() << " assigned " << endl;
@@ -500,7 +516,7 @@ void KMeans::Silhouette(dataInput* data) {
                 int secInd = (*(*this->clusterAr)[i]->returnindexesOfAssVecs())[k];
                 if(secInd!=curInd) {
                     // (*A)[Aindex] += 1;
-                    (*A)[Aindex] += manhattanDistance( (data->getinputFormByNum(secInd)->image), (data->getinputFormByNum(curInd)->image) );;
+                    (*A)[Aindex] += manhattanDistance( (data->getinputFormByNum(secInd)->image), (data->getinputFormByNum(curInd)->image) );
                     // manhattanDistance( (data->getinputFormByNum(i)->image), ((*centrAr)[0]->image) );
                 }
                 // else { (*A)[Aindex] = -1; //eaUto tou }
@@ -514,22 +530,65 @@ void KMeans::Silhouette(dataInput* data) {
 
     }
 
-    // time for b
-    vector<int> *B = computeB(data);
+    // siloueta kanoniki
+    vector<int> *BTMP = new vector<int>(dataSize); // array of min dis from vec to other centrs
+    for(int i=0; i<this->getClusNum(); i++) { // apo kathe cluster
+        
+        for(unsigned int j=0; j< (*this->clusterAr)[i]->returnindexesOfAssVecs()->size(); j++) { // gia kathe tou vector
+            int bigDis = 1000000000;
+            int secCloserClus = -1;
+            int curInd = (*(*this->clusterAr)[i]->returnindexesOfAssVecs())[j];
+            for(int k=0; k<this->getClusNum(); k++) {
+                
+                if (i!=k){ // apo kathe allo cluster metrao apostasi apo kentro
+                    int dis = manhattanDistance( (*this->clusterAr)[k]->centroidVec, (data->getinputFormByNum(curInd)->image) );
+                    // cout << "distance from vec " << j << " of cluster " << i << " to centroid of cluster " << k << " is " << dis << endl;
+                    if (dis<bigDis) {
+                        bigDis = dis;
+                        secCloserClus = k;
+                    }
+                }
+
+            }
+            // cout << "       vec " << j << " of cluster " << i << " closer to " << secCloserClus << " with dis " << bigDis << endl;
+            //  have found second closest cluster to vec
+            int BTMPindex=0;
+            for(unsigned int jj=0; jj< (*this->clusterAr)[secCloserClus]->returnindexesOfAssVecs()->size(); jj++) { // gia kathe vector tou second closest cluster
+                curInd = (*(*this->clusterAr)[secCloserClus]->returnindexesOfAssVecs())[jj];
+                (*BTMP)[BTMPindex] = 0;
+
+                for(unsigned int k=0; k< (*this->clusterAr)[secCloserClus]->returnindexesOfAssVecs()->size(); k++) {
+                    int secInd = (*(*this->clusterAr)[secCloserClus]->returnindexesOfAssVecs())[k];
+                    if(secInd!=curInd) {
+                        (*BTMP)[BTMPindex] += manhattanDistance( (data->getinputFormByNum(secInd)->image), (data->getinputFormByNum(curInd)->image) );
+                    }
+                }
+                // average
+                (*BTMP)[BTMPindex] = (*BTMP)[BTMPindex] / (*this->clusterAr)[secCloserClus]->returnindexesOfAssVecs()->size();
+                BTMPindex++;
+            }
+        }
+        // cout << endl;
+    }
 
     vector<double> *S = new vector<double>(dataSize); // array of siloueta
 
+    // vector<int> *B = computeB(data);    // wrong B
+
+    // for(unsigned int k=0; k< S->size(); k++) {
+    //     // (*S)[k] = (float)(( (float)(*B)[k] - (*A)[k]) / (float)std::max((*A)[k], (*B)[k]));
+    //     if( (*A)[k] <  (*B)[k] ) { (*S)[k] = (double)( (double)1 - (double)((double)((*A)[k]) / (double)((*B)[k])) ); }
+    //     else if ( (*A)[k] > (*B)[k] ) { (*S)[k] = (double)( (double)((double)((*B)[k]) / (double)((*A)[k])) - (double)1 ); }
+    //     else { (*S)[k] = (double)0; }
+    // }
+
     for(unsigned int k=0; k< S->size(); k++) {
-        // (*S)[k] = (float)(( (float)(*B)[k] - (*A)[k]) / (float)std::max((*A)[k], (*B)[k]));
-        if( (*A)[k] <  (*B)[k] ) {
-            (*S)[k] = (double)( (double)1 - (double)((double)((*A)[k]) / (double)((*B)[k])) );
+        // (*S)[k] = (float)(( (float)(*BTMP)[k] - (*A)[k]) / (float)std::max((*A)[k], (*BTMP)[k]));
+        if( (*A)[k] <  (*BTMP)[k] ) { (*S)[k] = (double)( (double)1 - (double)((double)((*A)[k]) / (double)((*BTMP)[k])) ); }
+        else if ( (*A)[k] > (*BTMP)[k] ) {
+            (*S)[k] = (double)( (double)((double)((*BTMP)[k]) / (double)((*A)[k])) - (double)1 );
         }
-        else if ( (*A)[k] > (*B)[k] ) {
-            (*S)[k] = (double)( (double)((double)((*B)[k]) / (double)((*A)[k])) - (double)1 );
-        }
-        else {
-            (*S)[k] = (double)0;
-        }
+        else { (*S)[k] = (double)0; }
     }
 
     // cout << "THE A is " << endl;
@@ -546,9 +605,10 @@ void KMeans::Silhouette(dataInput* data) {
     cout << "SilTotal is " << SilTotal << endl;
     cout << "Silhouette Total is " << ((double)SilTotal) / (double)(this->getClusNum()) << endl;
 
+    // delete B;
     delete S;
-    delete B;
     delete A;
+    delete BTMP;
 }
 
 // return 2nh best distance
@@ -577,14 +637,14 @@ int KMeans::returnClusterIndexFORB(inputForm* newInp) {
 
 vector<int> *KMeans::computeB(dataInput* data) {
     
-    cout << "TOTAL IMAGES ARE " << data->getiMageVectorSize() << endl;
+    // cout << "TOTAL IMAGES ARE " << data->getiMageVectorSize() << endl;
 
     vector<inputForm*> *centrAr = this->getKMeansCentroids(data);
     
-    cout << "IN THE END" << endl;
-    for(int i=0; i<this->getClusNum(); i++) {
-        cout << (*centrAr)[i]->Id << endl;
-    }
+    // cout << "IN THE END" << endl;
+    // for(int i=0; i<this->getClusNum(); i++) {
+    //     cout << (*centrAr)[i]->Id << endl;
+    // }
 
     vector<vector<int>*> *Cluster_Ar_OF_CENTERS = new vector<vector<int>*>(this->getClusNum());
     
@@ -609,7 +669,7 @@ vector<int> *KMeans::computeB(dataInput* data) {
     bool StayedSame = false;
     while( reps<threshold && StayedSame==false) {
 
-        cout << "\nREP " << reps << " for data->getiMageVectorSize() " << data->getiMageVectorSize() << endl;
+        // cout << "\nREP " << reps << " for data->getiMageVectorSize() " << data->getiMageVectorSize() << endl;
         
         StayedSame = true; // if even one changes then repeat
         
@@ -637,7 +697,7 @@ vector<int> *KMeans::computeB(dataInput* data) {
         }
         
 
-        for(int i=0; i<this->getClusNum(); i++) { cout << "   Cluster " << i << " has :" << (*Cluster_Ar_OF_ASS_VECTORS)[i]->size() << " assigned " << endl; }
+        // for(int i=0; i<this->getClusNum(); i++) { cout << "   Cluster " << i << " has :" << (*Cluster_Ar_OF_ASS_VECTORS)[i]->size() << " assigned " << endl; }
 
         // change centroids
         if(StayedSame==false) {  // compute new centroids if didn t change

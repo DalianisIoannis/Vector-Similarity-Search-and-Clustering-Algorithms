@@ -41,6 +41,8 @@ class cluster {
         void deleteindexesOfAssVecs();
 
         void delcentroidVec();
+
+        void print_assigned_vectors_ids();
 };
 
 class KMeans {
@@ -54,7 +56,7 @@ class KMeans {
         ~KMeans();
         int getClusNum();
         vector<inputForm*> *getKMeansCentroids(dataInput*);
-        void Clusterify(dataInput*);
+        void Clusterify(dataInput*, std::string output_file);
         void ClusterifyWITHLsh(dataInput*);
         
         int returnClusterIndex(inputForm*);

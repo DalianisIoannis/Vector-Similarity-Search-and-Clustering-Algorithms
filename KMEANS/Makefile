@@ -6,7 +6,7 @@ ODIR = build
 IDIR = headers
 SDIR = src
 
-EXECUTABLE = run
+EXECUTABLE = cluster
 
 _DEPS = input.h LSH.h HashTable.h HashFunctions.h kMeans.h list.h RedBlack.h cube.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
@@ -31,4 +31,5 @@ valgrind:
 	valgrind --track-origins=yes --trace-children=yes --leak-check=full ./run
 
 exe:
-	./run
+	# ./cluster -d t10k-images.idx3-ubyte -i input_file_newspace -n classes_from_NN_as_clusters_file.txt -c configuration_file.conf -o output_file
+	./cluster -d t10k-images.idx3-ubyte -i query_file_newspace -n classes_from_NN_as_clusters_file.txt -c configuration_file.conf -o output_file

@@ -29,8 +29,8 @@ int h_funct::hashValue(vector<int>* p, const int m, const int w, const int M) {
 // return h()
     long int ret = 0;
 
-    for(int i=0; i < p->size(); i++) {
-       if ((int)(this->powers->size()-1) < i){
+    for(long unsigned int i=0; i < p->size(); i++) {
+       if ((this->powers->size()-1) < i){
             powers->push_back((int)pow(m % M,i));
        }
         ret += abs((*powers)[i] * (ai( (*p)[i], (*this->VectorS)[i], w ) % M) % M);
