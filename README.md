@@ -14,6 +14,7 @@ Implementation of algorithms for vector clustering
 For the initialization step, the k-Means++ technique is used
 For the update step, we compute the median vector
 For the assignment step we either use 
-*the Lloyd's algorithm
-*Reverse assignment using LSH range search
-*Reverse assignment using Hypercube range search
+
+-The Lloyd's algorithm
+-Reverse assignment using LSH range search
+-Reverse assignment using Hypercube range search
