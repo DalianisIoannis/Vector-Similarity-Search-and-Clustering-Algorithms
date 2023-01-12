@@ -8,6 +8,14 @@ Implementation of the Random Projections to HyperCube algorithm based on L1
 
 We use input images from the MNIST dataset
 
+Both algorithms aim to find similar vectors approximately but with high probability
+
+Receiving as input a vector q and integers N, R, the program approximately computes 
+	- The nearest neighbor of q
+	- The N nearest neighbors of q
+	- All vectors within range R from q (range search)
+
+
 ## Clustering
 
 Implementation of algorithms for vector clustering
